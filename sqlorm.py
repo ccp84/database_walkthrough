@@ -19,8 +19,8 @@ class Artist(base):
 class Album(base):
     __tablename__ = "Album"
     AlbumId = Column(Integer, primary_key=True)
-    Title = Columm(String)
-    ArtistId = Column(Integet, ForeignKey("Artist.ArtistId"))
+    Title = Column(String)
+    ArtistId = Column(Integer, ForeignKey("Artist.ArtistId"))
 
 
 class Track(base):
@@ -44,3 +44,26 @@ session = Session()
 
 # create database from declarative base subclass
 base.metadata.create_all(db)
+
+
+# Select all from artists
+# artists = session.query(Artist)
+# for artist in artists:
+#     print(artist.ArtistId, artist.Name, sep=" | ")
+
+
+# select Queen from artists
+# queen = session.query(Artist).filter_by(Name="Queen").first()
+# print(queen.ArtistId, queen.Name, sep=" | ")
+
+
+# all albums by queen
+# albums = session.query(Album).filter_by(ArtistId=51)
+# for album in albums:
+#     print(album.Title, album.ArtistId, sep=" | ")
+
+
+# tracks with composer name queen
+tracks = session.query(Track).filter_by(Composer="Queen")
+for track in tracks:
+    print(track.Name, track.AlbumId, track.Composer, track.UnitPrice, sep=" | ")
